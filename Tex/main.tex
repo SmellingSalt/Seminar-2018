@@ -5,6 +5,10 @@
 \usepackage{upquote}
 \newcommand{\blank}[1]{\hspace*{#1}}
 \usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+
 %\onehalfspacing
 \doublespacing
 \newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
@@ -17,7 +21,7 @@
     \pagestyle{fancy}
 \usepackage{blindtext}
 
-\lhead{\footnotesize{Bitcoin: A Peer-to-Peer Electronic Cash System}}
+\lhead{\footnotesize{The Bitcoin Network and Protocol}}
 \chead{}
 \rhead{}
 \lfoot{\footnotesize{Department of ECE, PESIT-BSC }}
@@ -66,8 +70,9 @@
   }%
 }
 \pgfpagesuselayout{boxed}
-
+\renewcommand\bibname{\centerline{my-references}\global\def\bibname{my-references}}
 \begin{document}
+\bibliographystyle{unsrtnat}
 \begin{titlepage}
 \begin{center}
 \vspace{3cm}
@@ -88,19 +93,24 @@
 
 %\setcounter{page}{i}
 \begin{center}\underline{ \Large\textbf{ACKNOWLEDGEMENT}}\end{center}
-It is always a pleasure to remind the faculty of PESIT-BSC for their sincere guidance and support to intensify my wisdom and give me the opportunity to present what I have learned. I would like to thank to my parents for the encouragement, enthusiasm and invaluable lessons given, which have ingrained in me a sense of curiosity and wonder to attain an unquenchable thirst for knowledge. Without this, I would not have been able to complete this undertaking adequately.\\
+\justify
+\vspace{5mm}
+It's a pleasure reminding the faculty of PESIT-BSC for their guidance and support which intensified my wisdom and gave me the opportunity to present what I have learned. I would like to thank to my parents for the lessons, enthusiasm and encouragement given to me, without which a sense of curiosity and wonder wouldn't have been ingrained in me, to attain an unquenchable thirst for knowledge. Without this, I would not have been able to complete this undertaking adequately.\\
+\vspace{5mm}
+\justify
 
-I would like to accredit \textbf{Dr. J Surya Prasad} Director/Principal of PESIT BSC for the sterling facilities and resources that were made freely available to me which has enabled me to successfully complete this research and presentation venture.\\
-
+I would like to accredit \textbf{Dr. J Surya Prasad} Director/Principal of PESIT BSC for the sterling facilities and resources that were made freely available to me which has enabled me to successfully complete this research and presentation venture.\newline
 Furthermore, my gratitude to \textbf{Prof. Chiranjeevi} would not go overlooked, and I am grateful for his tremendous support and advice, without which, none of this would have materialised.\\
+\vspace{5mm}
+\justify
 
-Finally, my appreciation goes out to the project coordinators, \textbf{ Mrs.Vidya T V},\textbf{ Mr.Shivaraj J Karki}, and \textbf{ Mr. K Rama Murthy}, the Assistant Professors in \textbf{The Department of Electronics and Communication} for spearheading and organising the seminar discussion for the academic year  \textbf{2018}.
-I also apologise to all the other unnamed who have helped me in various ways to have successfully complete this endeavour.
+Finally, my appreciation goes out to the project coordinators, \textbf{ Mrs.Vidya T V},\textbf{ Mr.Shivaraj J Karki}, and \textbf{ Mr. K Rama Murthy}, the Assistant Professors in \textbf{The Department of Electronics and Communication} for spearheading and organising the seminar discussion for the academic year  
+\textbf{2018}. I also apologise to all the other unnamed who have helped me in various ways to have successfully complete this endeavour.
 
 \newpage
 \begin{center}\underline{ \Large \textbf{ABSTRACT}}\end{center}
 \vspace{5mm}
- \begin{flushleft}
+ \begin{justify}
  A peer-to-peer payment scheme over the internet, using electronic cash is usually mediated by a third party, for example, a financial institution. This obligation makes way to some issues which this report addresses. Bitcoin achieves decentralisation by being distributed and forgoing the need of any kind of trust between performing parties. The bypass for the need of external validation from a third party is done by employing cryptography and hashing. All this while managing to be be Byzantine Fault Tolerant. The aim of this study is to expose the underlying working principles of the Bitcoin  network and protocol which would, in effect, lead to a clearer picture of cryptocurrencies and blockchain technology, as a whole.
  \vspace{5mm}
   
@@ -137,15 +147,16 @@ I also apologise to all the other unnamed who have helped me in various ways to 
 5.2 & The Counter-Intuitive Solution & 13\\ \hline
 6 & Key Concepts & 17\\ \hline
 
-6.1 & Hashing & 17 \\ \hline
-6.2 & Merkle Trees & 19 \\ \hline
-7 & The Block Chain & 21 \\ \hline
-7.1 & The Block & 21 \\ \hline
-7.2 & Mining & 23 \\ \hline
-7.3 & Transactions & 24 \\ \hline
-8 & The Caveats & 27 \\ \hline
-9 & Conclusion & 29 \\ \hline
-10 & References & 30 \\ \hline
+6.1 & Hashing & 16 \\ \hline
+6.2 & Merkle Trees & 18 \\ \hline
+7 & The Block Chain & 20 \\ \hline
+7.1 & The Block & 20 \\ \hline
+7.2 & Mining & 22 \\ \hline
+7.3 & Transactions & 23 \\ \hline
+8 & The Caveats & 26 \\ \hline
+9 & Applications of Blockchain & 28 \\ \hline
+10 & Conclusion & 30 \\ \hline
+11 & Bibliography & 31 \\ \hline
 \end{tabular}
 
 \newpage
@@ -174,9 +185,12 @@ I also apologise to all the other unnamed who have helped me in various ways to 
 
 \begin{center}\underline{  \Large\textbf{CHAPTER1}}\end{center}
 \begin{center}\underline{ \Large \textbf{INTRODUCTION}}\end{center}
+
 \vspace{10mm} 
+
 Bitcoin is a currency that allows for peer-to-peer transactions over the internet which is not regulated or owned by a single institution. It was introduced in 2009 by a pseudo-anonymous person(s) by the name Satoshi Nakamoto as an open source software.
 \vspace{10mm}
+\justify
 It is synonymous with cryptocurrency as it employs cryptographic principles to ensure authenticity of all transactions that occur with it. As it is not owned by a single institution, say a bank or even associated with any country, the US Treasury has declared Bitcoin as a decentralised currency. This was the first of its kind and its existence has solved a few major problems that would be inherent in using currency which is stored as a sequence of bits on a computer.
 The bitcoin network works by using a string of attached, publicly accessible ledgers which is called a \textbf{blockchain}. Each ledger is simply named as a \textbf{block} and it contains transactions and other information necessary to locate, number and verify it. Transactions are always broadcast to the entire network to make sure that it can be validated. All information about a block can be condensed into a hash and this is called the block hash. This blockchain can be thought of as a linked list data structure wherein the pointers to the linked list are replaced by a block header.
 
@@ -191,6 +205,7 @@ The bitcoin network works by using a string of attached, publicly accessible led
 
 To grow this chain, a block has to be added to its end. The latest one added would contain the latest transactions that have occurred using this cryptocurrency. Nodes which add a block to the blockchain would have to prove that it has done \textbf{work} by solving a hashing puzzle, which on completion would yield that node the \textbf{transaction fees} as well as a default base pay, in bitcoins. This base pay introduces new bitcoins into the network and is the only source of generation of these coins, barring the first initial block, termed as the \textbf{genesis block}.
 \vspace{10mm}
+
 Bitcoins can be obtained in exchange for other currencies, products, and services. or users can buy, send, and receive bitcoins electronically for a nominal fee using wallet software on their a personal computer, mobile device, or a web application.
 Thus it can be used as a full fledged medium of monetary exchange between individuals. Since no country owns it, it is resilient to the economic conditions of many countries around the globe.
 
@@ -200,6 +215,7 @@ Thus it can be used as a full fledged medium of monetary exchange between indivi
 
 
 \vspace{10mm}
+
 In 2008, a paper surfaced on the internet by an anonymous Satoshi Nakamoto, which people believe can be accredited to the 2008 US financial crisis. An exploit to create many bitcoins did occur in 2009, which was promptly fixed and was the last known major fault in this system till date. Bitcoin's worth in physical currency has been fluctuating since its inception and has since gone numerous cycles of appreciation and depreciation.
 Due to this, it has been thought of by some as the next gold revolution, and by others, nothing more than just a bubble of inflation which could burst anytime.
 \vspace{5mm}
@@ -210,11 +226,11 @@ With the sudden popularity of this currency, its value rose as more and more peo
 
 \begin{figure}[h]
 \centering
-\caption{The price of Bitcoin in USD, over the years}
+\caption{The price of Bitcoin in USD, over the years \cite{ThePrice}}
 \includegraphics[scale=0.4]{pics/Price.JPG}
 \end{figure}
 
-\vspace{10mm}
+
 Being open source, the community has grown exponentially since 2009 with many developers working on Bitcoin and ways to improve it. As its founder Satoshi Nakamoto has been anonymous ever since, some people have raised concerns over this system, many linked to the open source nature of this cryptocurrency many.
 
 As the source code and implementation is open and freely available, anyone can participate in this decentralised system. And just as how like current developers do not control or regulate bitcoin, even its founder Satoshi had no influence over it since its inception.
@@ -227,20 +243,21 @@ As the source code and implementation is open and freely available, anyone can p
 \vspace{10mm}
 \textbf{3.1 THE REASONS FOR BITCOIN}
 \vspace{10mm}
-
+\justify
 As discussed earlier, the 2008 financial crisis was one of the leading reasons for the creation of the bitcoin. 
 To summarise, the financial crisis of 2008 in the US was caused by banks which lent out risky loans to attract new customers, which would enable banks to get money to give more loans and so on. This was like a bubble, and eventually it burst in 2008. As the loans were risky, many banks were not paid back and the list of loan defaulters gradually increased. This made many banks collapse and file for bankruptcy. In addition to giving out risky loans, these banks also used people’s money to invest in various opportunities, which didn't work as intended, causing a further downfall.
 \vspace{10mm}
+\justify
 People had trusted these banks to keep money safe, but in turn they lost it all. Noticing this widespread bankruptcy, the American Government tried saving these banks. They attempted a bail out by repaying people's money. These funds came from the taxes that were payed and it caused an overall fall in the development of the nation.
 Here lies the first problem. Financial institutions do not keep people's money idly sitting. It is used to lend loans and offer other services, which could lead to a collapse like this.
 Another widespread issue is that when governments overspend and are out of funds, they request banks to print more money, which in turn just devalues the currency as more of it is available.
 \vspace{10mm}
-
+\justify
 Bitcoin solves these issues by account of it being a decentralised financial system. Nobody owns or regulates the money, and every transaction is accounted for.  These coins either are spent, or stay put. Not moving anywhere.
 
 \newpage
 \vspace{10mm}
-\textbf{3.2 The Benefits of Bitcoin}
+\textbf{3.2 The Benefits of Bitcoin \cite{Shantanu}}
 \vspace{10mm}
 
 By decentralising and distributing the monetary powers of a financial institution, bitcoin can leverage consensus to make decisions. This means that nobody would tend to make risky decisions and that leads to some interesting implications, such as:
@@ -303,12 +320,12 @@ An attacker would have to know the private key of a person, to validate transact
 
 \begin{figure}[h]
 \centering
-\caption{Brief Overview of Digital Signature Verification}
+\caption{Brief Overview of Digital Signature Verification \cite{DigitalSignature}}
 \includegraphics[scale=0.6]{pics/model_digital_signature.jpg}
 \end{figure}
 \vspace{10mm}
 
-As shown above, the sender's signed data is hashed. A hashing function just takes an input set of characters of a a variable length and puts out, always, a fixed length of characters which appear random but are just pseudo-random. This means that if the same set of input were to be inputted again, it would result in the same hash. Hasing will be further looked into, later on.
+As shown above, the sender's signed data is hashed. A hashing function just takes an input set of characters of a a variable length and puts out, always, a fixed length of characters which appear random but are just pseudo-random. This means that if the same set of input were to be inputted again, it would result in the same hash. Hashing will be further looked into, later on.
 \newpage
 \textbf{4.2 REPEAT TRANSACTIONS}
 \vspace{10mm}
@@ -329,7 +346,7 @@ When the network realises that the same coin is being spent twice, it drops the 
 \vspace{10mm}
 \begin{figure}[h]
 \centering
-\caption{The Double Spending Issue}
+\caption{The Double Spending Issue \cite{coins}}
 \includegraphics[scale=0.5]{pics/double_spending.jpg}
 \end{figure}
 \vspace{10mm}
@@ -357,7 +374,7 @@ An attacker could also \textit{fork} the blockchain, listening to transactions a
 \vspace{10mm}
 \begin{figure}[h]
 \centering
-\caption{Fork Attack}
+\caption{Fork Attack \cite{fork}}
 \includegraphics[scale=0.4]{pics/fork.jpg}
 \end{figure}
 
@@ -376,11 +393,10 @@ To understand why this system is safe, let us assume that a dishonest sender \te
 In this original chain, \textit{S} has paid \textit{M}. Parallelly, if \textit{S} were to create a fraudulent block, without that transaction having ever taken place, to add it back to the chain and fool \textit{M}, \textit{S} would have to rebuild \textit{z} blocks as well, and also any other blocks that would have arrived by the time they were replicating the \textit{z+1} blocks. \textit{M} may be alerted when that happens, but the \textit{S} hopes it will be too late.\newline
 
 What we will now show is that if it is made hard to put in a single block on the blockchain network, so hard that if someone attempts to fork the chain anywhere, it should be highly unlikely that they succeed to fool anybody unless and until they own 51\% or more of the entire \textit{capability to put blocks on the chain} or simply put, that much computational power so that they win the consensus. Let us assume that\newline
-
 \textit{p} = the probability an honest node makes the next block\newline
 \textit{q} = the probability the attacker makes the next block\newline
 \textit{$q_z$} = the probability the attacker will ever catch up from \textit{z} blocks behind\newline
-Then, it can be shown that \newline
+Then, it can be shown that \cite{Satoshi}\newline
 \begin{equation*} 
   q_z = \begin{cases}
  1  & \text{if $p \leq q$} \\
@@ -396,7 +412,7 @@ And if we model the time taken by an attacker to succeed as an ergodic Poisson p
 \end{equation*}
 \newline
 
-Now to get the probability the attacker could still catch up to \textit{z} blocks and  surpass it to fool \textit{M}, we multiply the Poisson density for each amount of progress he could have made by the probability he could catch up from that point. Doing this would give us the probability of his success as:
+Now to get the probability the attacker could still catch up to \textit{z} blocks and  surpass it to fool \textit{M}, we multiply the Poisson density for each amount of progress he could have made by the probability he could catch up from that point. Doing this would give us the probability of his success as: \cite{Satoshi}
 
 \begin{equation*} 
  %1-\sum_{k=0}^{z} \dfrac{\lambda^(k)e^(-\lambda)}{k!}
@@ -405,13 +421,13 @@ P\left( k \right) =1-\sum_{k=0}^{z} \frac{{e^{ - \lambda } \lambda ^k }}{{k!}}\B
 \end{equation*}
 
 This concludes that if the attacker must create more than \textit{z} blocks, they must create $k>z$ number of them and then the probability of that happening, and \textit{S} succeeding dies down exponentially when this is attempted, since it would take some significantly finite amount of time for the attacker to not only catch up to, but also surpass \textit{z} blocks. 
-\vspace{10mm}
+\vspace{5mm}
 
 Thus, the bitcoin network migrates the need for trust in the consenting parties, to the need for a hope that there is no attacker with the computing power of 51\% or more. This is not an unreasonable requirement if the network is widespread enough. Then there would always be cooperative nodes as it would be more economical to try and get transactions verified in return for the reward by the network than to just try and attack it.
-\vspace{10mm}
+\vspace{7mm}
 
 The network is said now said to be Byzantine Fault Tolerant. This means that it mitigates the Byzantine Faults in distributed networks. A Fault of such a kind is an inherent limitation in a system, where information propagation from one component to another would never be a 100\% accurate. There would always be a non-zero probability that the information is false. Proof-of-Work makes the Bitcoin network Byzantine fault Tolerant as only nodes with a lot of computational power can propogate information.
-\vspace{10mm}
+\vspace{7mm}
 
 Since it is now hard to put a block on the blockchain, a node wouldn't just add one transaction at a time it would instead listen to many transactions happening, put them all in a block and then try to add that block onto the blockchain. The network caps the total size of the block so that it easy to handle and move around.
 \newline
@@ -465,7 +481,7 @@ Not only that, but also the fact that the algorithm is heavily dependant on the 
 \vspace{10mm}
 \begin{figure}[h]
 \centering
-\caption{SHA-256 Core Logic}
+\caption{SHA-256 Core Logic \cite{SHA}}
 \includegraphics[scale=0.50]{pics/usercontent,img,1471445681.png}
 \end{figure}
 \vspace{10mm}
@@ -525,7 +541,7 @@ The last two fields, namely the Nonce and the Bits are somethings that weren't s
 \vspace{10mm}
 \begin{figure}[h]
 \centering
-\caption{A Block with its Various Fields}
+\caption{A Block with its Various Fields\cite{field}}
 \includegraphics[scale=0.7]{pics/blk.JPG}
 \end{figure}
 \vspace{10mm}
@@ -545,7 +561,7 @@ As ascertained earlier, the hash of any given string of characters are seemingly
 \vspace{10mm}
 \begin{figure}[h]
 \centering
-\caption{The Sensitivity to the Inputs of Hashing Functions}
+\caption{The Sensitivity to the Inputs of Hashing Functions \cite{prop}}
 \includegraphics[scale=0.7]{pics/BlockOverviewSHA.png}
 \end{figure}
 \vspace{10mm}
@@ -606,7 +622,28 @@ The bitcoin network may be very cleverly designed, but it is not without its sho
     \item Bitcoin remains susceptible to wild price swings over short periods of time. In the wake of the Mt. Gox collapse, Bitcoin’s value fell by more than 50\%. Following the FBI’s announcement that it would treat Bitcoin and other virtual currencies as “legitimate financial services,” Bitcoin’s value spiked by a similar amount. While Bitcoin’s volatility sometimes offers short-term benefits for speculative traders, it renders the currency unsuitable for longer-term investors.
 \end{itemize}
 
+\newpage
+\begin{center}\underline{ \Large \textbf{APPLICATIONS OF BLOCKCHAIN}}\end{center}
+\vspace{10mm}
+The blockchain technology as explained in this report has very desirable properties that can allow it to be used in a plethora of applications, not just in cryptocurrencies. A few applications could be listed as follows.
+\begin{itemize}
+    \item \textbf{Intellectual Property} \newline
+    Many patents and similar ideas could be recorded on the blockchain since it offers an unparalleled data storage capability with an added benefit of being tamper-proof.
+    \item \textbf{Smart Locks} \newline
+    As stated earlier hashing with its extreme unlikeliness of guessing the output of a for a fixed input, can pave way to a smart locks as only the owner of a particular set of inputs could generate a given set of hashes that authorises access to valuables.
+    \item \textbf{Distributed Cloud} \newline
+    Cloud Services offered today are centralised and have data stored in one single location.This means that the storage facility can peek into the data of its users, violating privacy. On the blockchain, data can be distributed and safely stored using encryption to others from peeping in. Only the possessor of the decryption key can access the files.
+    \item \textbf{Identity} \newline
+    Since blockchain uses digital keys to sign and verify identity, documents pertaining to one's identity can be replaced on this type of a network. Passports, ID cards, etc can be replaced by a simple check on the private key.
+    
+    \item \textbf{Smart Contracts} \newline
+    Contracts in the real world require a third party to mediate and validate the contents of the contract. Instead of this, the blockchain could have \textit{programmable contracts} in it, instead of transactions. Then, when certain conditions are met, say a deadline, the blockchain program releases funds, or does whatever the contract directs it to do. These type of contracts cannot be tampered with and so are extremely secure
+    \item \textbf{Voting} \newline
+    The problem with voting these days is that it could be influenced by powerful politicians who would skewer the results to their favour. This issue can be circumvented using blockchain technology. Every voter could receive one vote, akin to a bitcoin, and cast (pay the bitcoin) to the politician they choose. In the end, as the blockchain network has no room for trust and neither can it be \textit{bought}, the vote goes to the desired candidate without any hiccups or worries. 
+\end{itemize}
 
+\vspace{10mm}
+These are some of the applications of blockchain technology apart from just cryptocurrencies. More applications could definitely come up, some that couldn't even be thought of, until yet. There are a lot of doors that open up when trust is completely removed, and transparency flourishes. Thus it can be said that Blockchain is here to stay.
 
 \newpage
 \begin{center}\underline{ \Large \textbf{CONCLUSION}}\end{center}
@@ -616,32 +653,58 @@ We showed that digital currencies can provide a strong control of ownership, but
 The double spending issue was also mitigated and we also showed how the network is Byzantine Fault Tolerant. This was done by introducing the Proof-of-Work, which eliminates any trust, and mitigates the fault.\newline
 This Proof-of-Work was shown to be nothing but a mere way of guessing the input to the SHA-256 hashing algorithm (which was also briefly explained) such that the hash would lie below a certain target threshold.
 The network is robust in its unstructured simplicity. Nodes work all at once with little coordination, without the need to be identified.\newline
-The disadvantages of bitcoins was also looked into and the blockchain was explained along with the various fields of the block. The Merkle Root, the block hash, the Version field, the Bits field, the Nonce and the time-stamp. An actual bitcoin transaction was also looked into and the true meaning of owning a bitcoin was shown to be just the addition of \textit{all the unreferenced outputs of various transactions, that have that public key as the recipient address which is associated to the private key of the holder of the said bitcoins.}\newline
+The disadvantages of bitcoins was also looked into and the blockchain was explained along with the various fields of the block. The Merkle Root, the block hash, the Version field, the Bits field, the Nonce and the time-stamp. A few uses of the blockchain technology were also briefly discussed.\newline
 
-\newpage
-\begin{center}\underline{ \Large \textbf{REFERENCES}}\end{center}
+An actual bitcoin transaction was also looked into and the true meaning of owning a bitcoin was shown to be just the addition of \textit{all the unreferenced outputs of various transactions,  that have that public key as the recipient address which is associated to the private key of the holder of the said bitcoins.}\newline
 
-[1] S. Nakamoto. Bitcoin: A peer-to-peer electronic cash system. www.bitcoin.org.\\
+%\newpage
+%\begin{center}\underline{ \Large \textbf{REFERENCES}}\end{center}
 
-[2] Courtois, N. T., Grajek, M., & Naik, R. (2013). The Unreasonable Fundamental Incertitudes Behind Bitcoin Mining. arXiv preprint arXiv:1310.7935.\\
+\centering
+\bibliography{REFERENCES}
+\begin{thebibliography}{9}
+\bibitem{Satoshi} 
+S. Nakamoto. 
+\textit{A peer-to-peer electronic cash system.}.
+www.bitcoin.org.
+ 
+\bibitem{coins}
+How Bitcoin Handles The Double Spending Problem
+\texttt{https://coinsutra.com/bitcoin-double-spending/ }. 
+ 
+\bibitem{DigitalSignature} Model of Digital Signature
+\texttt{https://www.tutorialspoint.com/cryptography/ \newline cryptography\_digital\_signatures.htm}.
 
-[3] Babaioff, M., Dobzinski, S., Oren, S., & Zohar, A. (2012, June). On bitcoin and red balloons.
-In Proceedings of the 13th ACM Conference on Electronic Commerce (pp. 56-73). ACM.\\
+\bibitem{ThePrice} Price of bitcoin
+\texttt{https://www.worldcoinindex.com/coin/bitcoin#}
 
-[4]https://medium.com/@micheledaliessi/how-does-the-blockchain-work-98c8cd01d2ae\\
+\bibitem{Shantanu} 
+Shantanu Kumar Singh: 
+\textit{A Report on Bitcoin}.
 
-[5] http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/\\
+\bibitem{fork} Fork Attacks
+\texttt{https://bitcoin.org/en/developer-guide}
 
-[6] https://www.youtube.com/watch?v=UZBZPOEVyJA\\
+\bibitem{SHA} SHA256 algortihm
+\texttt{https://opencores.org/project,sha256\_hash\_core}
 
-[7] https://www.youtube.com/watch?v=gUwXCt1qkBU
+\bibitem{field} How Mining Works
+\texttt{http://www.righto.com/2014/02/bitcoin\newline -mining-hard-way-alg-orithms.html}
+
+\bibitem{prop} Properties of cryptographic hash function 
+\texttt{http://freecontent.manning.com/\newline cryptographic-hashes-and-bitcoin/}
+
+
+
+\end{thebibliography}
 
 
 
 
 
 
-\end{flushleft}
+
+\end{justify}
 
 
 
